@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'RecipeApp';
+  navigationTo = 'recipes';
+
+  onNavigationClicked(navigationToValue: {navigatedValue: string}) {
+    this.navigationTo = navigationToValue.navigatedValue;
+    console.log(this.navigationTo);
+  }
 }

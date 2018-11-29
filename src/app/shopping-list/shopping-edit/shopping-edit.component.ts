@@ -8,6 +8,10 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 })
 export class ShoppingEditComponent implements OnInit {
 
+  /**
+   * @ViewChild('nameInput') provides ElementRef of the nativeElement,
+   * which contains the nativeElement.
+  */
   @ViewChild('nameInput') ingredientNameInputRef: ElementRef;
   @ViewChild('amountInput') ingredientAmountInputRef: ElementRef;
 

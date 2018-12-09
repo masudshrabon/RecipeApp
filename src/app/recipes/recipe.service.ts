@@ -33,6 +33,10 @@ export class RecipeService {
     return this.recipes.slice(); // slice() function provides a copy of the this.recipes; untouched this.recipes.
   }
 
+  getRecipeByIndex(id: number) {
+    return this.recipes[id];
+  }
+
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
   }

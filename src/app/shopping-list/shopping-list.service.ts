@@ -4,11 +4,16 @@ import { Subject } from 'rxjs';
 export class ShoppingListService {
 
   ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
 
   private ingredients: Ingredient[] = [
     new Ingredient('Apple', 5),
     new Ingredient('Tomato', 10),
   ];
+
+  getIngredient(index: number) {
+    return this.ingredients[index];
+  }
 
   getIngredients() {
     // slice() provides a copy of the array (referenece type); untouched the original array; avoiding accidental change of the array.

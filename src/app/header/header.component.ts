@@ -1,3 +1,4 @@
+import { DataStorageService } from './../shared/data-storage.service';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
@@ -5,5 +6,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
     templateUrl: './header.component.html'
 })
 export class HeaderComponent {
+
+  constructor(private dataStorageService: DataStorageService) {}
+  onSaveData() {
+    this.dataStorageService.storeRecipes().subscribe(
+      (response) => console.log(response),
+      (errror) => console.log(errror)
+    );
+  }
 
 }

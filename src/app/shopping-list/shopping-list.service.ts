@@ -15,6 +15,11 @@ export class ShoppingListService {
     return this.ingredients[index];
   }
 
+  setIngredients(ingredients: Ingredient[]) {
+    this.ingredients = ingredients;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
   getIngredients() {
     // slice() provides a copy of the array (referenece type); untouched the original array; avoiding accidental change of the array.
     return this.ingredients.slice();

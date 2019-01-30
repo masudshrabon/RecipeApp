@@ -1,7 +1,8 @@
 import { Route, ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from './../recipes/recipe.model';
 import { DataStorageService } from './../shared/data-storage.service';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnChanges } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +12,8 @@ export class HeaderComponent {
 
   constructor(
     private dataStorageService: DataStorageService,
-    private router: Router
+    private router: Router,
+    private autheService: AuthService
   ) {}
 
   onSaveData() {
@@ -34,6 +36,14 @@ export class HeaderComponent {
     } else if (this.router.url === '/shopping-list') {
       this.dataStorageService.getShoppingListIngredients();
     }
+  }
+
+  isAuthenticated() {
+    return this.autheService.isAuthenticated();
+  }
+
+  onLogout() {
+    this.autheService.logout();
   }
 
 }

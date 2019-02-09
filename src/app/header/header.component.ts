@@ -17,12 +17,12 @@ export class HeaderComponent {
   ) {}
 
   onSaveData() {
-    if (this.router.url === '/recipes') {
+    if (this.router.url.includes('/recipes')) {
       this.dataStorageService.storeRecipes().subscribe(
         (response) => console.log(response),
         (errror) => console.log(errror)
       );
-    } else if (this.router.url === '/shopping-list') {
+    } else if (this.router.url.includes('/shopping-list')) {
       this.dataStorageService.storeShoppingListIngredients().subscribe(
         (response) => console.log(response),
         (errror) => console.log(errror)
@@ -31,9 +31,9 @@ export class HeaderComponent {
   }
 
   onFetchData() {
-    if (this.router.url === '/recipes') {
+    if (this.router.url.includes('/recipes')) {
       this.dataStorageService.getRecipes();
-    } else if (this.router.url === '/shopping-list') {
+    } else if (this.router.url.includes('/shopping-list')) {
       this.dataStorageService.getShoppingListIngredients();
     }
   }

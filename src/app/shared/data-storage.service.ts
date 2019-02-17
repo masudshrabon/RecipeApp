@@ -2,15 +2,15 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from './../recipes/recipe.model';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { RecipeService } from '../recipes/recipe.service';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataStorageService {
   constructor(
-    private http: Http,
+    private httpClient: HttpClient,
     private recipeService: RecipeService,
     private shoppingListService: ShoppingListService,
     private authService: AuthService
@@ -18,18 +18,15 @@ export class DataStorageService {
 
   storeRecipes() {
     const token = this.authService.getToken();
-
-    return this.http.put('https://ng-recipe-app-project-id.firebaseio.com/recipes.json?auth=' + token,
+    return this.httpClient.put('https://ng-recipe-app-project-id.firebaseio.com/recipes.json?auth=' + token,
       this.recipeService.getRecipes());
   }
 
   getRecipes() {
     const token = this.authService.getToken();
-
-    return this.http.get('https://ng-recipe-app-project-id.firebaseio.com/recipes.json?auth=' + token)
+    return this.httpClient.get<Recipe[]>('https://ng-recipe-app-project-id.firebaseio.com/recipes.json?auth=' + token)
       .pipe(map(
-        (response: Response) => {
-          const recipes: Recipe[] = response.json();
+        (recipes) => {
           recipes.forEach(recipe => {
             if (!recipe['ingredients']) {
               recipe['ingredients'] = [];
@@ -46,16 +43,17 @@ export class DataStorageService {
   }
 
   storeShoppingListIngredients() {
-    return this.http.put('https://ng-recipe-app-project-id.firebaseio.com/ingredients.json',
+    const token = this.authService.getToken();
+    return this.httpClient.put('https://ng-recipe-app-project-id.firebaseio.com/ingredients.json?auth=' + token,
     this.shoppingListService.getIngredients());
   }
 
   getShoppingListIngredients() {
-    return this.http.get('https://ng-recipe-app-project-id.firebaseio.com/ingredients.json')
+    const token = this.authService.getToken();
+    return this.httpClient.get<Ingredient[]>('https://ng-recipe-app-project-id.firebaseio.com/ingredients.json?auth=' + token)
       .subscribe(
-        (response: Response) => {
-          const ingredient: Ingredient[] = response.json();
-          this.shoppingListService.setIngredients(ingredient);
+        (ingredients) => {
+          this.shoppingListService.setIngredients(ingredients);
         }
       );
   }

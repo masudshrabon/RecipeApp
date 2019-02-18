@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { RecipeService } from '../recipes/recipe.service';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { AuthService } from '../auth/auth.service';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
 @Injectable()
 export class DataStorageService {
@@ -19,12 +19,16 @@ export class DataStorageService {
   storeRecipes() {
     const token = this.authService.getToken();
     // const headers = new HttpHeaders().set('Authorization', 'Bearer xyzFirebaseAuthNotNotWorkHereViaAuthorization');
-    return this.httpClient.put('https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
+    /* return this.httpClient.put('https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
       this.recipeService.getRecipes(), {
         observe: 'body',
         params: new HttpParams().set('auth', token)
         // headers: headers
-      });
+      }); */
+    const req = new HttpRequest('PUT', 'https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
+      this.recipeService.getRecipes(),
+      { reportProgress: true, params: new HttpParams().set('auth', token) });
+      return this.httpClient.request(req);
   }
 
   getRecipes() {

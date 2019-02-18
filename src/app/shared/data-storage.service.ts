@@ -17,7 +17,7 @@ export class DataStorageService {
   ) {}
 
   storeRecipes() {
-    const token = this.authService.getToken();
+    // const token = this.authService.getToken();
     // const headers = new HttpHeaders().set('Authorization', 'Bearer xyzFirebaseAuthNotNotWorkHereViaAuthorization');
     /* return this.httpClient.put('https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
       this.recipeService.getRecipes(), {
@@ -25,9 +25,17 @@ export class DataStorageService {
         params: new HttpParams().set('auth', token)
         // headers: headers
       }); */
-    const req = new HttpRequest('PUT', 'https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
+    /* const req = new HttpRequest('PUT', 'https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
       this.recipeService.getRecipes(),
       { reportProgress: true, params: new HttpParams().set('auth', token) });
+      return this.httpClient.request(req); */
+
+      /* auth token is now handled by a way: interceptor in order to avoid it using in every request. It's cool.
+         angular automatically takes care of intercepting every request (as we use HTTP_INTERCEPTORS)
+      */
+      const req = new HttpRequest('PUT', 'https://ng-recipe-app-project-id.firebaseio.com/recipes.json',
+      this.recipeService.getRecipes(),
+      { reportProgress: true });
       return this.httpClient.request(req);
   }
 

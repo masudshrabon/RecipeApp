@@ -8,6 +8,7 @@ const initialState = {
   ]
 };
 
+/** Automatically call by ngrx when an action is dispatched. */
 export function shoppingListReducers(state = initialState, action: ShoppingListActions.ShoppingListActions) {
   switch (action.type) {
     case ShoppingListActions.ADD_INGREDIENT:

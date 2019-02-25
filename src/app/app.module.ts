@@ -23,7 +23,7 @@ import { shoppingListReducers } from './shopping-list/store/shopping-list.reduce
     ShoppingListModule,
     AuthModule,
     CoreModule,
-    StoreModule.forRoot({shoppingList: shoppingListReducers})
+    StoreModule.forRoot({shoppingList: shoppingListReducers}) // Register a store for reducers to store states
   ],
   bootstrap: [AppComponent]
 })
